@@ -23,7 +23,7 @@ export default function CreatePoll() {
 
     try {
       setLoading(true);
-      const res = await api.post("/polls/create", {
+      const res = await api.post("/api/polls/create", {
         question,
         options: options.map(o => ({ text: o }))
       });
