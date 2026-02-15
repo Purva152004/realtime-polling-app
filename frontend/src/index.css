@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global background */
+body {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.animate-slide-up {
+  animation: fadeIn 0.5s ease-out;
+}
+
+
+@keyframes navbarSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-navbar {
+  animation: navbarSlide 0.5s ease-out;
+}
+
+.shape {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 9999px;
+  opacity: 0.25;
+  filter: blur(2px);
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-25px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Dark mode base */
+.dark body {
+  background: linear-gradient(135deg, #0f172a, #020617);
+}
+
+/* Cards */
+.dark .create-card,
+.dark .poll-card {
+  background-color: #020617;
+  color: #e5e7eb;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Inputs */
+.dark .input {
+  background-color: #020617;
+  border-color: #334155;
+  color: #e5e7eb;
+}
+
+.dark .input::placeholder {
+  color: #94a3b8;
+}
+
+/* Buttons */
+.dark .button-primary {
+  background-color: #6366f1;
+}
+
+.dark .option-btn {
+  background-color: #1e293b;
+  color: #e5e7eb;
+}
+
+
+/* Dark mode fix for share link box */
+.dark .link-box {
+  background-color: #022c22; 
+  color: #d1fae5; 
+  border: 1px solid #065f46;
+}
+
+.dark .link-box a {
+  color: #93c5fd; 
+  word-break: break-all;
+}
+
+.dark .link-box a:hover {
+  text-decoration: underline;
+}

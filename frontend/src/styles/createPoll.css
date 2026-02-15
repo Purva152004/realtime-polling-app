@@ -1,0 +1,42 @@
+.create-card {
+  @apply bg-white rounded-xl shadow-xl p-8;
+}
+
+.input {
+  @apply w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500;
+}
+
+.button-primary {
+  @apply w-full bg-indigo-600 text-white py-2 rounded-md font-semibold hover:bg-indigo-700 transition;
+}
+
+.error {
+  @apply text-red-500 mt-2;
+}
+
+.link-box {
+  @apply mt-4 p-3 bg-green-100 border border-green-300 rounded-md text-sm;
+}
+
+.create-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.create-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 25px 40px -15px rgba(99, 102, 241, 0.25);
+}
+
+
+.button-primary {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button-primary:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 25px rgba(79, 70, 229, 0.35);
+}
+
+.button-primary:active {
+  transform: scale(0.98);
+}

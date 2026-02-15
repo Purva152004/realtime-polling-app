@@ -1,0 +1,7 @@
+.poll-card {
+  @apply bg-white rounded-xl shadow-lg p-8;
+}
+
+.option-btn {
+  @apply w-full border py-2 rounded-md mb-2 hover:bg-indigo-50 transition;
+}
