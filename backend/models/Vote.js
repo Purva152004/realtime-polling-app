@@ -10,14 +10,14 @@ const voteSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  optionIndex: {
-    type: Number,
+  optionIndexes: {
+    type: [Number],
     required: true
   }
 });
 
 /**
- * One vote per poll per user
+ * One vote per poll per user (correct for both single & multi)
  */
 voteSchema.index({ pollId: 1, voterId: 1 }, { unique: true });
 

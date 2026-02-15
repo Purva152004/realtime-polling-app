@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const pollSchema = new mongoose.Schema({
   question: String,
+  allowMultiple: {
+    type: Boolean,
+    default: false
+  },
   options: [
     {
       text: String,
@@ -12,6 +16,5 @@ const pollSchema = new mongoose.Schema({
     }
   ]
 });
-
 
 module.exports = mongoose.model("Poll", pollSchema);
