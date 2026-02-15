@@ -18,7 +18,7 @@ export default function PollPage() {
   }
 
   useEffect(() => {
-    api.get(`/polls/${id}`).then(res => setPoll(res.data));
+    api.get(`/api/polls/${id}`).then(res => setPoll(res.data));
     socket.emit("joinPoll", id);
     socket.on("updateResults", setPoll);
 
