@@ -26,15 +26,25 @@ export default function PollPage() {
   }, [id]);
 
   const vote = async (index) => {
-    if (voted) return;
-    try {
-      await api.post(`/polls/${id}/vote`, { optionIndex: index, voterId });
+  if (voted) return;
+
+  try {
+    await api.post(`/polls/${id}/vote`, {
+      optionIndex: index,
+      voterId
+    });
+
+    setVoted(true);
+  } catch (err) {
+    if (err.response?.status === 409) {
+      alert("You already voted on this poll.");
       setVoted(true);
-    } catch {
-      alert("You already voted.");
-      setVoted(true);
+    } else {
+      alert("Something went wrong. Please try again.");
     }
-  };
+  }
+};
+
 
   if (!poll) return <p className="text-center mt-20">Loading...</p>;
 
