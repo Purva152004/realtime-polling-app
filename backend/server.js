@@ -7,40 +7,36 @@ const connectDB = require("./config/db");
 const app = express();
 const server = http.createServer(app);
 
-const io = require("socket.io")(server, {
-  cors: {
-    origin: process.env.CLIENT_URL,
-    methods: ["GET", "POST"]
-  }
-});
-
-// Connect DB
-connectDB();
-
-// Socket setup
-require("./socket/socket")(io);
-
-// Middleware
+// CORS
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
     methods: ["GET", "POST"],
-    credentials: false
   })
 );
 
 app.use(express.json());
 
-// Attach io to request
-app.use((req, res, next) => {
-  req.io = io;
-  next();
+// Socket.IO
+const io = require("socket.io")(server, {
+  cors: {
+    origin: process.env.CLIENT_URL,
+  },
 });
+
+// Attach io globally (safe)
+app.set("io", io);
+
+// DB
+connectDB();
+
+// Socket logic
+require("./socket/socket")(io);
 
 // Routes
 app.use("/api/polls", require("./routes/pollRoutes"));
 
-// Start server
-server.listen(process.env.PORT, () =>
-  console.log(`🚀 Server running on port ${process.env.PORT}`)
-);
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
