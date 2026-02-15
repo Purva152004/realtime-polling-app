@@ -1,57 +1,68 @@
 const express = require("express");
+const router = express.Router();
 const Poll = require("../models/Poll");
 const Vote = require("../models/Vote");
 
-const router = express.Router();
-
-/* Create Poll */
+/**
+ * CREATE POLL
+ */
 router.post("/create", async (req, res) => {
   try {
-    const { question, options } = req.body;
-
-    if (!question || options.length < 2) {
-      return res.status(400).json({ message: "Invalid poll data" });
-    }
-
-    const poll = await Poll.create({ question, options });
-    res.json(poll);
+    const poll = await Poll.create(req.body);
+    res.status(201).json(poll);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: "Failed to create poll" });
   }
 });
 
-/* Get Poll */
+/**
+ * GET POLL BY ID
+ */
 router.get("/:id", async (req, res) => {
-  const poll = await Poll.findById(req.params.id);
-  if (!poll) return res.status(404).json({ message: "Poll not found" });
-  res.json(poll);
+  try {
+    const poll = await Poll.findById(req.params.id);
+    res.json(poll);
+  } catch {
+    res.status(404).json({ message: "Poll not found" });
+  }
 });
 
-/* Vote */
+/**
+ * VOTE
+ */
 router.post("/:id/vote", async (req, res) => {
   try {
     const { optionIndex, voterId } = req.body;
-    const ip = req.ip;
 
+    // 1️⃣ Prevent duplicate vote
     const alreadyVoted = await Vote.findOne({
       pollId: req.params.id,
-      $or: [{ voterId }, { ip }]
+      voterId
     });
 
     if (alreadyVoted) {
-      return res.status(403).json({ message: "Already voted" });
+      return res.status(400).json({ message: "Already voted" });
     }
 
+    // 2️⃣ Save vote
+    await Vote.create({
+      pollId: req.params.id,
+      optionIndex,
+      voterId
+    });
+
+    // 3️⃣ Update poll option count
     const poll = await Poll.findById(req.params.id);
     poll.options[optionIndex].votes += 1;
     await poll.save();
 
-    await Vote.create({ pollId: poll._id, voterId, ip });
-
+    // 4️⃣ Emit updated poll to everyone
     req.io.to(req.params.id).emit("updateResults", poll);
+
     res.json(poll);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Vote failed" });
   }
 });
 
