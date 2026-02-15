@@ -5,3 +5,85 @@
 .option-btn {
   @apply w-full border py-2 rounded-md mb-2 hover:bg-indigo-50 transition;
 }
+
+
+/* =========================
+   NAVBAR RESPONSIVENESS FIX
+   (NO JSX CHANGES)
+   ========================= */
+
+/* Desktop stays exactly the same */
+@media (min-width: 1025px) {
+  nav .-ml-20 {
+    margin-left: -5rem;
+  }
+}
+
+/* Tablets */
+@media (max-width: 1024px) {
+  nav .-ml-20 {
+    margin-left: 0 !important;
+  }
+
+  nav button[style] {
+    margin-right: 0 !important;
+  }
+
+  nav .-mr-40 {
+    margin-right: 0 !important;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 768px) {
+  nav {
+    padding: 0.5rem 0;
+  }
+
+  nav .max-w-6xl {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  /* Brand section */
+  nav .-ml-20 {
+    margin-left: 0 !important;
+  }
+
+  nav h1 {
+    font-size: 1.25rem;
+  }
+
+  /* Hide divider on mobile */
+  nav span.h-6 {
+    display: none;
+  }
+
+  /* Create Poll button */
+  nav button {
+    padding: 0.45rem 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  nav button[style] {
+    margin-right: 0 !important;
+  }
+
+  /* Theme toggle */
+  nav .-mr-40 {
+    margin-right: 0 !important;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 480px) {
+  nav .max-w-6xl {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav button {
+    width: 100%;
+    text-align: center;
+  }
+}
