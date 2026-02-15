@@ -24,9 +24,11 @@ require("./socket/socket")(io);
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
-    credentials: true
+    methods: ["GET", "POST"],
+    credentials: false
   })
 );
+
 app.use(express.json());
 
 // Attach io to request

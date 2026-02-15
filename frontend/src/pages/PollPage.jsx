@@ -36,14 +36,17 @@ export default function PollPage() {
 
     setVoted(true);
   } catch (err) {
+    console.error("Vote error:", err.response?.data || err.message);
+
     if (err.response?.status === 409) {
       alert("You already voted on this poll.");
       setVoted(true);
     } else {
-      alert("Something went wrong. Please try again.");
+      alert("Vote failed. Please refresh and try again.");
     }
   }
 };
+
 
 
   if (!poll) return <p className="text-center mt-20">Loading...</p>;
