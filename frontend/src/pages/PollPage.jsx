@@ -26,65 +26,61 @@ export default function PollPage() {
   }, [id]);
 
   const vote = async (index) => {
-  if (voted) return;
+    if (voted) return;
 
-  try {
-    const res = await api.post(`/api/polls/${id}/vote`, {
-      optionIndex: index,
-      voterId
-    });
+    try {
+      const res = await api.post(`/api/polls/${id}/vote`, {
+        optionIndex: index,
+        voterId
+      });
 
-    setPoll(res.data);
-    setVoted(true);
-  } catch (err) {
-    console.error("Vote error:", err.response?.data || err.message);
-
-    if (err.response?.status === 409) {
-      alert("You already voted on this poll.");
+      setPoll(res.data);
       setVoted(true);
-    } else {
-      alert("Vote failed. Please refresh and try again.");
+    } catch (err) {
+      console.error("Vote error:", err.response?.data || err.message);
+
+      if (err.response?.status === 409) {
+        alert("You already voted on this poll.");
+        setVoted(true);
+      } else {
+        alert("Vote failed. Please refresh and try again.");
+      }
     }
-  }
-};
+  };
 
-
-
-  if (!poll) return <p className="text-center mt-20">Loading...</p>;
+  if (!poll) return <p className="text-center mt-32">Loading...</p>;
 
   return (
-
-    <div className="relative min-h-screen flex items-center justify-center">
-      
+    <div className="relative min-h-screen flex items-start justify-center pt-32 pb-16">
       {/* 🔹 Background animation */}
       <FloatingShapes />
-    
-    <div className="max-w-md w-full px-1 -mt-20">
-      <div className="poll-card animate-fade-in">
-        <h2 className="text-xl font-bold mb-4">{poll.question}</h2>
 
-        {poll.options.map((o, i) => (
-          <button
-            key={i}
-            className={`option-btn ${
-              voted ? "opacity-60 cursor-not-allowed" : ""
-            }`}
-            onClick={() => vote(i)}
-            disabled={voted}
-          >
-            {o.text}
-          </button>
-        ))}
+      <div className="max-w-md w-full px-1">
+        <div className="poll-card animate-fade-in">
+          <h2 className="text-xl font-bold mb-4">{poll.question}</h2>
 
-        {voted && (
-          <p className="text-green-600 text-sm mt-2">
-            ✅ Thank you for voting!
-          </p>
-        )}
+          {poll.options.map((o, i) => (
+            <button
+              key={i}
+              className={`option-btn ${
+                voted ? "opacity-60 cursor-not-allowed" : ""
+              }`}
+              onClick={() => vote(i)}
+              disabled={voted}
+            >
+              {o.text}
+            </button>
+          ))}
 
-        <PollResults poll={poll} />
+          {voted && (
+            <p className="text-green-600 text-sm mt-2">
+              ✅ Thank you for voting!
+            </p>
+          )}
+
+          <PollResults poll={poll} />
+        </div>
       </div>
-    </div>
     </div>
   );
 }

@@ -7,10 +7,7 @@
 }
 
 
-/* =========================
-   NAVBAR RESPONSIVENESS FIX
-   (NO JSX CHANGES)
-   ========================= */
+
 
 /* Desktop stays exactly the same */
 @media (min-width: 1025px) {
