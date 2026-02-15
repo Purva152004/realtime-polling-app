@@ -29,11 +29,12 @@ export default function PollPage() {
   if (voted) return;
 
   try {
-    await api.post(`/polls/${id}/vote`, {
+    const res = await api.post(`/api/polls/${id}/vote`, {
       optionIndex: index,
       voterId
     });
 
+    setPoll(res.data);
     setVoted(true);
   } catch (err) {
     console.error("Vote error:", err.response?.data || err.message);
