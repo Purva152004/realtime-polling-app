@@ -5,8 +5,8 @@ Built with the MERN stack and Socket.IO, with fairness controls to reduce abusiv
 
 ## Live Demo
 ```
-Frontend: http://localhost:5173
-Backend API: http://localhost:5000
+Frontend: https://realtime-polling-app-zeta.vercel.app
+Backend API: https://realtime-polling-app-39pf.onrender.com/
 ```
 ## Features
 ### 1. Poll Creation
